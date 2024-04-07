@@ -117,25 +117,23 @@ const MVP = () => {
     return (
         <div className="flex flex-col ml-64 mt-[60px] p-10 border">
             <div className="   ">
-                <span className="text-2xl text-white">MVP</span>
+                <span className="text-2xl text-white">Digitalized Records</span>
                 <div className='flex flex-row justify-between '>
-
-                    <div className='flex flex-col items-center'>
-
-                        <div>
-                            <input type="file" onChange={handleImageUpload} />
-                            {image && <img src={image} alt="Uploaded" />}
-                            <h2 className='text-ml text-white'>Extracted Text:</h2>
-
+                    <div className='flex flex-row  '>
+                        <span>   <input type="file" onChange={handleImageUpload} />{image && <img src={image} alt="Uploaded" />}
+                        </span>
+                        <div className=' p-2 flex flex-col    '>
+                            <h2 className='text-xl text-white mb-[20px]'>Extracted Text:</h2>
                             {extractedText && (
                                 <div>
-                                    <p className='border '>{extractedText}</p>
+                                    <p className='border text-white mb-[20px] p-2'>{extractedText}</p>
                                 </div>)
                             }
                             {extractedText &&
                                 (<div>
-                                    <input type="text" value={inputValue} onChange={handleInputChange} />
-                                    <button className='bg-gray-800' onClick={fetchData}>Ask Query</button>
+                                    <input className="p-2 w-full bg-[#040620] text-white placeholder-white focus:outline-none mb-[20px]" type="text" value={inputValue} onChange={handleInputChange} placeholder='Ask question based on the data' />
+
+                                    <button className='py-2 px-5 bg-violet-500 text-white font-semibold rounded-full shadow-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75' onClick={fetchData}>Ask Query</button>
                                     {responseData && (<p className='border '>{responseData.result}</p>)}
 
                                 </div>)

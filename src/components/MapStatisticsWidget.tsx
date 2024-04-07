@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 
 import ProgressBarWidget from './ProgressBarWidget';
@@ -6,9 +6,13 @@ import ProgressBarWidget from './ProgressBarWidget';
 interface IMapStatisticsWidget {
     District: string;
 }
-const MapStatisticsWidget = ( data : IMapStatisticsWidget) => {
+
+
+
+const MapStatisticsWidget = (data: IMapStatisticsWidget) => {
+
     return (
-        <div className="flex flex-col text-white     w-[500px]">
+        <div className="flex flex-col text-white w-[500px]">
             <h1 className='font-semibold'> Map Stats</h1>
             <h1 className='font-semibold'> District: <span className='font-light'>{data.District}</span></h1>
             <ProgressBarWidget heading={'Crime Rate'} percentage={'50%'} color={''} />
