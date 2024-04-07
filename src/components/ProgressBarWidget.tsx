@@ -15,6 +15,6 @@ const ProgressBarWidget = ({ heading, percentage, color }: IProgressBarWidget) =
                 {percentage}
             </div>
         </div>
-    )
+    )   
 }
 export default ProgressBarWidget;
