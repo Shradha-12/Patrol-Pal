@@ -18,10 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className=" " lang="en">
-      <body className="">
+    <html lang="en">
+      <body className=" ">
         <Layout />
-        {children}
+        <div className="flex flex-col ml-64 mt-[60px] p-10 border ">
+          {children}</div>
       </body>
     </html>
   );

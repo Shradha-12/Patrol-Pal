@@ -36,6 +36,16 @@ body {
   box-shadow: inset 0px 5px 10px 0px rgba(0, 0, 0, 0);
 }
 
+.hide-scrollbar {
+  overflow-y: auto;
+  -ms-overflow-style: none; /* for Internet Explorer */
+  scrollbar-width: none; /* for Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* for WebKit browsers like Chrome and Safari */
+}
+
 /* #Bagalkote {
   fill: #ff5733;
 }

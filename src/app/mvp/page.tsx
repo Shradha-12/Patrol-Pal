@@ -1,19 +1,50 @@
 "use client"
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Tesseract from 'tesseract.js';
 import axios from 'axios';
-import { Button } from '@mui/material';
-
+import Image from 'next/image';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import LinearProgress from '@mui/material/LinearProgress';
+import { Chat } from '@mui/icons-material';
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
+interface Chat {
+    text: string;
+    user: boolean;
+}
 const MVP = () => {
+
     const [image, setImage] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState('');
     const [extractedText, setExtractedText] = useState<string>('');
     const [responseData, setResponseData] = useState<any>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [chatHistory, setChatHistory] = useState<Chat[]>([
+        { text: 'Have question ask me?', user: false }
+    ]);
+
+    const chatContainerRef = useRef<HTMLUListElement>(null);
+
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
     };
-    const fetchData = async () => {
+    const fetchData = async (qa: string) => {
+        const userMessage: Chat = { text: qa, user: true };
+        const newChatHistory = [...chatHistory, userMessage];
+        setChatHistory(newChatHistory);
+
         const options = {
             method: 'POST',
             url: 'https://open-ai21.p.rapidapi.com/conversationgpt35',
@@ -26,7 +57,7 @@ const MVP = () => {
                 messages: [
                     {
                         role: 'user',
-                        content: `On April 7, 2024, at approximately 3:00 AM, a hit-and-run accident occurred at the intersection of Oak Avenue and Pine Street. A pedestrian, identified as Sarah Smith, was struck by a vehicle while crossing the street. The vehicle fled the scene without stopping.Witnesses described the vehicle as a dark-colored sedan, but license plate information was not obtained. Sarah Smith sustained moderate injuries and was transported to the hospital for treatment. from this content  tell me ${inputValue}`
+                        content: `On April 7, 2024, at approximately 3:00 AM, a hit-and-run accident occurred at the intersection of Oak Avenue and Pine Street. A pedestrian, identified as Sarah Smith, was struck by a vehicle while crossing the street. The vehicle fled the scene without stopping.Witnesses described the vehicle as a dark-colored sedan, but license plate information was not obtained. Sarah Smith sustained moderate injuries and was transported to the hospital for treatment. from this content  tell me ${qa}`
                     }
                 ],
                 web_access: false,
@@ -39,13 +70,26 @@ const MVP = () => {
         };
 
         try {
-            const response = await axios.request(options);
-            setResponseData(response.data);
+            // const response = await axios.request(options);
+            const responseMessage: Chat = { text: "response.data.result", user: false };
+            const updatedChatHistory = [...newChatHistory, responseMessage];
+            setChatHistory(updatedChatHistory);
+
         } catch (error) {
             console.error(error);
         }
     };
 
+    const handleChat = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const chat = new FormData(e.currentTarget);
+        const chatText = chat.get("chat").toString();
+        if (chatText.trim() != '') {
+            const newChatHistory = [...chatHistory, { text: chatText, user: true }];
+            setChatHistory(newChatHistory);
+            fetchData(chatText);
+        }
+    }
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -53,55 +97,9 @@ const MVP = () => {
         const imageUrl = URL.createObjectURL(file);
         setImage(imageUrl);
 
-        // Resize image
-        const resizedImageUrl = await resizeImage(imageUrl);
-        setImage(resizedImageUrl);
-
         // Extract text from resized image
-        const extractedText = await extractTextFromImage(resizedImageUrl);
+        const extractedText = await extractTextFromImage(imageUrl);
         setExtractedText(extractedText || 'Text extraction failed.');
-    };
-
-    const resizeImage = async (imageUrl: string): Promise<string> => {
-        return new Promise((resolve) => {
-            const img = new Image();
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                if (!ctx) throw new Error('Canvas context is null.');
-
-                // Set canvas dimensions
-                const maxWidth = 400; // Set your desired maximum width
-                const maxHeight = 300; // Set your desired maximum height
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxWidth) {
-                        height *= maxWidth / width;
-                        width = maxWidth;
-                    }
-                } else {
-                    if (height > maxHeight) {
-                        width *= maxHeight / height;
-                        height = maxHeight;
-                    }
-                }
-
-                canvas.width = width;
-                canvas.height = height;
-
-                // Draw image on canvas
-                ctx.drawImage(img, 0, 0, width, height);
-
-                // Convert canvas to data URL
-                const resizedImageUrl = canvas.toDataURL('image/jpeg');
-
-                resolve(resizedImageUrl);
-            };
-
-            img.src = imageUrl;
-        });
     };
 
     const extractTextFromImage = async (imageUrl: string): Promise<string | null> => {
@@ -113,37 +111,85 @@ const MVP = () => {
             return null;
         }
     };
-
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [chatHistory]);
     return (
-        <div className="flex flex-col ml-64 mt-[60px] p-10 border">
-            <div className="   ">
-                <span className="text-2xl text-white">Digitalized Records</span>
-                <div className='flex flex-row justify-between '>
-                    <div className='flex flex-row  '>
-                        <span>   <input type="file" onChange={handleImageUpload} />{image && <img src={image} alt="Uploaded" />}
-                        </span>
-                        <div className=' p-2 flex flex-col    '>
-                            <h2 className='text-xl text-white mb-[20px]'>Extracted Text:</h2>
-                            {extractedText && (
-                                <div>
-                                    <p className='border text-white mb-[20px] p-2'>{extractedText}</p>
-                                </div>)
-                            }
-                            {extractedText &&
-                                (<div>
-                                    <input className="p-2 w-full bg-[#040620] text-white placeholder-white focus:outline-none mb-[20px]" type="text" value={inputValue} onChange={handleInputChange} placeholder='Ask question based on the data' />
+        < >
+            <h1 className="text-white text-3xl font-x mb-4 h-full">Digitalized Records</h1>
+            <div className='flex flex-col justify-between '>
+                <div className='flex flex-row  '>
 
-                                    <button className='py-2 px-5 bg-violet-500 text-white font-semibold rounded-full shadow-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75' onClick={fetchData}>Ask Query</button>
-                                    {responseData && (<p className='border '>{responseData.result}</p>)}
+                    <span>
 
-                                </div>)
-                            }
-                        </div>
+                        {
+                            image && <Image
+                                src={image}
+                                alt="Uploaded"
+                                width='300'
+                                height='400'
+                                layout="responsive"
+                            />
+                        }
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            tabIndex={-1}
+                            startIcon={<CloudUploadIcon />}
+                        >
+                            Upload file
+                            <VisuallyHiddenInput type="file" onChange={handleImageUpload} />
+                        </Button>
+                    </span>
+                    <div className=' p-2 flex flex-col    '>
+                        <h2 className='text-xl text-white mb-[20px]'>Extracted Text:</h2>
+                        {extractedText && (
+                            <div>
+                                <p className='border text-white mb-[20px] p-2  '>{extractedText}</p>
+                            </div>)
+                        }
+
+                        {image && !extractedText && <LinearProgress />}
 
                     </div>
+
                 </div>
-            </div>
-        </div>
+                {extractedText && <div className="  p-2">
+                    <ul className=" border chat-history list-none p-0  h-[400px] overflow-y-scroll hide-scrollbar">
+
+                        {chatHistory.map((message, index) => {
+                            return (
+                                <li
+                                    key={index}
+                                    className={`chat-message flex p-3 rounded-lg mb-2 ${message.user ? 'justify-end bg-gray-200 text-gray-800 ml-[100px]' : 'justify-start bg-blue-500 text-white mr-[100px]'
+                                        }`}
+                                >
+                                    {message.text}
+                                </li>
+                            )
+                        }
+                        )}
+                    </ul>
+                    <form id="chat-form" name="chatform" onSubmit={handleChat} className="p-2 flex flex-row w-full sticky bottom-0 z-50">
+                        <input className=" placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md p-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm w-full" placeholder="Search for anything..." type="text" name="chat" />
+
+                        <Button className=" w-[60px] ml-2 rounded-lg bg-[#474D84] " type="submit">
+                            Send
+                        </Button>
+                    </form>
+                </div>}
+                {/* {extractedText &&
+                    (<div>
+                        <input className="p-2 w-full bg-[#040620] text-white placeholder-white focus:outline-none mb-[20px]" type="text" value={inputValue} onChange={handleInputChange} placeholder='Ask question based on the data' />
+                        <button className='py-2 px-5 bg-violet-500 text-white font-semibold rounded-full shadow-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75' onClick={fetchData}>Ask Query</button>
+                        {responseData && (<p className='border '>{responseData.result}</p>)}
+                    </div>)
+                } */}
+            </div >
+        </>
     )
 }
 

@@ -7,20 +7,18 @@ const DetailView = () => {
     // const { state } = useLocation();
 
     return (
-        <div className="flex flex-col ml-64 mt-[60px] p-10 border">
-            <div className="   ">
-                <span className="text-2xl text-white">District</span>
-                <div className='flex flex-row justify-between '>
+        < >
+            <h1 className="text-white text-3xl font-x mb-4">District</h1>
+            <div className='flex flex-row justify-between '>
 
-                    <div className='flex flex-col items-center'>
-
-                    
+                <div className='flex flex-col items-center'>
 
 
-                    </div>
+
+
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 export default DetailView;

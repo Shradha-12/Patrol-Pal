@@ -14,30 +14,10 @@ const FIRForm = () => {
     const onSubmit: SubmitHandler<FormValue> = (data: any) => {
         console.log("final data", data)
     }
-    // const handleSubmit = e => {
-    //         e.preventDefault();
-    //         // Handle form submission, e.g., send data to backend
-    //       };
-    const handleForgotPassword = () => {
-        // Handle forgot password action here
-        // For example, navigate to the forgot password page
-    }
-
-    const handleSignUp = () => {
-        // Handle sign-up action here
-        // For example, navigate to the sign-up page
-    }
-
-    const handleGoogleSignIn = () => {
-        // Handle Google sign-in action here
-    }
-
-    return (<div className="flex flex-col ml-64 mt-[60px] p-10 border">
-        <div className="   ">
+    return (
+        <>
             <div className='flex flex-row justify-between '>
-
                 <div className='flex flex-col items-center'>
-
                     <div className="bg-color ">
 
                         <AppBar position="static" style={{ backgroundColor: '#17193b' }}>
@@ -68,11 +48,7 @@ const FIRForm = () => {
                                                     })
                                                     }
                                                 />
-                                                {/* {
-                                        errors.email && (
-                                            <p className='error-msg'>{errors.email.message}</p>
-                                        )
-                                    } */}
+
                                                 <TextField fullWidth
                                                     label="Address"
                                                     type="text"
@@ -89,11 +65,7 @@ const FIRForm = () => {
                                                     })
                                                     }
                                                     style={{ marginTop: '20px' }} />
-                                                {/* {
-                                        errors.password && (
-                                            <p className='error-msg'>{errors.password.message}</p>
-                                        )
-                                    } */}
+
                                                 <TextField fullWidth
                                                     label="Mobile Number"
                                                     type="string"
@@ -131,9 +103,7 @@ const FIRForm = () => {
                                                     style={{ marginTop: '20px' }} />
 
                                                 <Button style={{ marginTop: '20px', backgroundColor: 'red' }} type="submit" fullWidth variant="contained">Submit</Button>
-                                                {/* <Link href="#" onClick={handleForgotPassword} style={{ marginTop: '10px', display: 'block', textAlign: 'center' }}>Forgot Password?</Link>
-                                    <p style={{ marginTop: '10px', textAlign: 'center' }}>Don't have a sign-up account? <Link href="#" onClick={handleSignUp}>Sign up now!</Link></p>
-                                    <Button onClick={handleGoogleSignIn} style={{ marginTop: '20px' }} fullWidth variant="contained">Sign in with Google</Button> */}
+
                                             </Box>
 
                                         </form>
@@ -144,12 +114,9 @@ const FIRForm = () => {
                         </Container>
                     </div>
 
-
                 </div>
             </div>
-        </div>
-    </div >
-
+        </  >
     )
 
 }
