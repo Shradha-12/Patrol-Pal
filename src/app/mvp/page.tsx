@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react';
+import { REACT_APP_OPEN_API_TOKEN } from '../../components/constant'
 import Tesseract from 'tesseract.js';
 import axios from 'axios';
 import Image from 'next/image';
@@ -33,7 +34,7 @@ const MVP = () => {
     const [chatHistory, setChatHistory] = useState<Chat[]>([
         { text: 'Have question ask me?', user: false }
     ]);
-
+    const [apiKey, setApiKey] = useState<string>(REACT_APP_OPEN_API_TOKEN);
     const chatContainerRef = useRef<HTMLUListElement>(null);
 
 
@@ -44,13 +45,12 @@ const MVP = () => {
         const userMessage: Chat = { text: qa, user: true };
         const newChatHistory = [...chatHistory, userMessage];
         setChatHistory(newChatHistory);
-
         const options = {
             method: 'POST',
             url: 'https://open-ai21.p.rapidapi.com/conversationgpt35',
             headers: {
                 'content-type': 'application/json',
-                'X-RapidAPI-Key': 'b9b96632e3msh454f62c7867ed71p194989jsnee8ada0775b9',
+                'X-RapidAPI-Key': "b9b96632e3msh454f62c7867ed71p194989jsnee8ada0775b9",
                 'X-RapidAPI-Host': 'open-ai21.p.rapidapi.com'
             },
             data: {
@@ -70,8 +70,9 @@ const MVP = () => {
         };
 
         try {
-            // const response = await axios.request(options);
-            const responseMessage: Chat = { text: "response.data.result", user: false };
+            console.log(options.headers)
+            const response = await axios.request(options);
+            const responseMessage: Chat = { text: response.data.result, user: false };
             const updatedChatHistory = [...newChatHistory, responseMessage];
             setChatHistory(updatedChatHistory);
 

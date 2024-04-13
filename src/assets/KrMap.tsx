@@ -1,32 +1,43 @@
-import React, { useState } from "react";
-interface IKrMap { gstyle: string, pstyle: string, setSelectedState: (value: string) => void }
+import React, { useState, useRef } from "react";
+interface IKrMap {
+  gstyle: string,
+  pstyle: string,
+  setSelectedState: (value: string) => void
+
+}
 const KrMap = ({ gstyle, pstyle, setSelectedState }: IKrMap) => {
-  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove: { (event: MouseEvent): void } = (e: MouseEvent) => {
-    // const rect = e.getBoundingClientRect();
-    const x = e.pageX;
-    const y = e.pageY;
-    console.log(x, y)
-    setCoordinates({ x, y });
-
+  const svgRef = useRef(null);
+  const [hoverState, setHoverState] = useState<string>("");
+  const handleMouseOver = (event: any) => {
+    const svgElement = svgRef.current;
+    if (svgElement) {
+      const hoveredPath = event.target.closest('path');
+      if (hoveredPath && hoveredPath.id) {
+        console.log(hoveredPath.id)
+        setHoverState(hoveredPath.id);
+      }
+    }
   };
 
-  return (
-    <svg
-      onMouseMove={() => handleMouseMove}
+  return (<div>
+
+    <svg ref={svgRef} onMouseOver={handleMouseOver}
       className={gstyle}
       version="1.0"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1920.000000 1920.000000"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    // preserveAspectRatio="xMidYMid meet"
+    >x
       <g
         transform="translate(0.000000,1920.000000) scale(0.100000,-0.100000)"
         fill="#474d84"
-        className="shadow-md"
+        className="shape shadow-md"
       >
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
+
           id="Bidar"
           onClick={() => setSelectedState("Bidar")}
           className={pstyle}
@@ -54,8 +65,13 @@ const KrMap = ({ gstyle, pstyle, setSelectedState }: IKrMap) => {
 -7 33 -15 41 -8 8 -12 21 -9 29 4 10 0 15 -13 15 -11 0 -27 8 -36 18 -16 17
 -16 23 -2 70 9 29 13 57 10 62 -11 18 -39 10 -75 -20 -22 -20 -45 -30 -66 -30
 -58 0 -82 45 -70 128 18 125 19 158 1 175 -26 26 -61 20 -174 -28z"
-        />
+        ></path>
+
+
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           id="Gulbarga"
           onClick={() => setSelectedState("Gulbarga")}
           className={pstyle}
@@ -98,8 +114,13 @@ c-20 35 -28 40 -80 51 -91 19 -103 17 -114 -17 -14 -38 -34 -38 -54 0 -14 27
 -64 74 -85 6 -12 -41 -30 -51 -60 -32 -10 6 -12 19 -7 44 5 29 0 47 -26 97
 -18 34 -39 65 -48 68 -32 11 -49 36 -56 78 -7 47 -24 51 -24 6 -1 -32 -31 -95
 -45 -94 -13 1 -33 68 -34 114 -1 58 -28 66 -79 22z"
-        />
+        > <text x="50" y="50" dy=".3em">
+            This is a path!
+          </text></path>
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Bijapur")}
           id="Bijapur"
           className={pstyle}
@@ -138,6 +159,9 @@ c-69 0 -77 2 -106 29 -22 20 -31 38 -31 60 0 25 -8 36 -40 57 -22 15 -40 31
 -40 35 0 16 -19 9 -30 -10z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Raichur")}
           id="Raichur"
           className={pstyle}
@@ -166,6 +190,9 @@ l-42 12 -96 -73 c-108 -83 -107 -83 -253 -56 -158 30 -209 13 -260 -89 -20
 31 -112 39 -129 39 -179 6z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Belagavi")}
           id="Belagavi"
           className={pstyle}
@@ -223,6 +250,9 @@ l-42 12 -96 -73 c-108 -83 -107 -83 -253 -56 -158 30 -209 13 -260 -89 -20
 -61 80 l-51 43 3 136 c3 124 1 137 -15 140 -10 2 -33 -13 -58 -40z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Bagalkote")}
           id="Bagalkote"
           className={pstyle}
@@ -255,6 +285,9 @@ c-64 8 -125 -7 -154 -38 -19 -20 -20 -28 -12 -57 14 -48 -12 -98 -66 -128 -54
 30 -214 40 -238 14z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Raichur")}
           id="Raichur"
           className={pstyle}
@@ -287,6 +320,9 @@ l124 -116 98 -26 c85 -23 107 -33 157 -75 32 -26 80 -73 108 -103 28 -31 55
 -123 29 -39 -20 -54 -2 -45 54 4 27 2 46 -6 56 -15 18 -42 19 -58 3z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Bellary")}
           id="Bellary"
           className={pstyle}
@@ -314,6 +350,9 @@ l124 -116 98 -26 c85 -23 107 -33 157 -75 32 -26 80 -73 108 -103 28 -31 55
 12 84 -3 31 -4 32 -58 35 -38 2 -62 -2 -77 -13z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Gadag")}
           id="Gadag"
           className={pstyle}
@@ -345,6 +384,9 @@ l124 -116 98 -26 c85 -23 107 -33 157 -75 32 -26 80 -73 108 -103 28 -31 55
 -8 44 -20 37 -34 -23z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Chitradurga")}
           id="Chitradurga"
           className={pstyle}
@@ -387,6 +429,9 @@ l124 -116 98 -26 c85 -23 107 -33 157 -75 32 -26 80 -73 108 -103 28 -31 55
 -48 43 2 25 -27 65 -47 65 -5 0 -10 -9 -10 -19z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Dharwad")}
           id="Dharwad"
           className={pstyle}
@@ -409,6 +454,9 @@ l124 -116 98 -26 c85 -23 107 -33 157 -75 32 -26 80 -73 108 -103 28 -31 55
 -19 19 -35 30 l-30 21 -18 -30z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("UttaraKannada")}
           id="UttaraKannada"
           className={pstyle}
@@ -449,6 +497,9 @@ l124 -116 98 -26 c85 -23 107 -33 157 -75 32 -26 80 -73 108 -103 28 -31 55
 23 -33 32 0 48 -97 156 -161 180 -18 7 -49 19 -67 27 -39 17 -182 40 -182 30z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Haveri")}
           id="Haveri"
           className={pstyle}
@@ -475,6 +526,9 @@ l124 -116 98 -26 c85 -23 107 -33 157 -75 32 -26 80 -73 108 -103 28 -31 55
 c-42 25 -46 31 -52 75 -12 89 -26 152 -35 152 -5 0 -27 -22 -49 -48z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Chitradurga")}
           id="Chitradurga"
           className={pstyle}
@@ -510,6 +564,9 @@ c-42 25 -46 31 -52 75 -12 89 -26 152 -35 152 -5 0 -27 -22 -49 -48z"
 67 -30 46z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("DakshinaKannada")}
           id="DakshinaKannada"
           className={pstyle}
@@ -538,6 +595,9 @@ l6 74 75 28 c41 16 95 33 119 39 l44 12 -6 76 c-10 113 -14 125 -46 116 -56
 -37 -3 0 -22 20 -41 44 -19 24 -50 51 -68 60 -43 21 -145 21 -162 1z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Shimoga")}
           id="Shimoga"
           className={pstyle}
@@ -576,6 +636,9 @@ l-32 -30 26 -30 c15 -19 25 -43 25 -62 0 -18 7 -54 16 -82 28 -92 32 -134 19
 -51 -7 -58 -14z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Tumkur")}
           id="Tumkur"
           className={pstyle}
@@ -603,6 +666,9 @@ c-31 -4 -58 -8 -58 -8 -1 -1 -5 -33 -9 -71 -6 -57 -4 -68 7 -64 20 8 78 -18
 -62 19 -81 -1z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Tumkur")}
           id="Tumkur"
           className={pstyle}
@@ -647,6 +713,9 @@ l27 63 -21 29 c-26 34 -28 68 -7 76 21 8 19 17 -11 61 -24 35 -25 43 -20 112
 53 -2 0 -5 -7 -9 -15z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Kolar")}
           id="Kolar"
           className={pstyle}
@@ -682,6 +751,9 @@ l27 63 -21 29 c-26 34 -28 68 -7 76 21 8 19 17 -11 61 -24 35 -25 43 -20 112
 3 -25 -4 -36 -30z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Udupi")}
           id="Udupi"
           className={pstyle}
@@ -701,6 +773,9 @@ l27 63 -21 29 c-26 34 -28 68 -7 76 21 8 19 17 -11 61 -24 35 -25 43 -20 112
 -90 71 -99 41z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Chikkamagaluru")}
           id="Chikkamagaluru"
           className={pstyle}
@@ -731,6 +806,9 @@ l27 63 -21 29 c-26 34 -28 68 -7 76 21 8 19 17 -11 61 -24 35 -25 43 -20 112
 -35 0 -47 -8 -116 -74z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Kolar")}
           id="Kolar"
           className={pstyle}
@@ -763,6 +841,9 @@ l27 63 -21 29 c-26 34 -28 68 -7 76 21 8 19 17 -11 61 -24 35 -25 43 -20 112
 -8 -32 -7 -44 2 -8 7 -41 13 -74 13 -56 0 -58 -1 -58 -26z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Hassan")}
           id="Hassan"
           className={pstyle}
@@ -798,6 +879,9 @@ l27 63 -21 29 c-26 34 -28 68 -7 76 21 8 19 17 -11 61 -24 35 -25 43 -20 112
 -3 0 -11 -13 -20 -29z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("BangaloreRural")}
           id="BangaloreRural"
           className={pstyle}
@@ -822,6 +906,9 @@ l31 105 33 0 c47 0 49 23 2 27 -30 2 -39 7 -41 25 -2 12 2 32 8 44 11 19 18
 -68 24 -73 34 -8 13 -23 17 -63 17 -52 0 -54 -1 -60 -30z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("BangaloreUrban")}
           id="BangaloreUrban"
           className={pstyle}
@@ -838,6 +925,9 @@ l31 105 33 0 c47 0 49 23 2 27 -30 2 -39 7 -41 25 -2 12 2 32 8 44 11 19 18
 -109 29 -237 73 -287 99 -51 26 -138 50 -178 50 -9 0 -36 -15 -59 -33z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("DakshinaKannada")}
           id="DakshinaKannada"
           className={pstyle}
@@ -866,6 +956,9 @@ l31 105 33 0 c47 0 49 23 2 27 -30 2 -39 7 -41 25 -2 12 2 32 8 44 11 19 18
 35 -28 54 -95 111 -130 111 -24 0 -39 -13 -87 -71z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("BangaloreRural")}
           id="BangaloreRural"
           className={pstyle}
@@ -891,6 +984,9 @@ l31 105 33 0 c47 0 49 23 2 27 -30 2 -39 7 -41 25 -2 12 2 32 8 44 11 19 18
 88 -13 35 -71 112 -85 112 -2 0 -7 -11 -11 -24z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Mandya")}
           id="Mandya"
           className={pstyle}
@@ -921,6 +1017,9 @@ l-20 25 -45 -30 c-42 -28 -46 -29 -79 -15 -33 14 -37 13 -64 -6 -52 -39 -71
 -52z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Kodagu")}
           id="Kodagu"
           className={pstyle}
@@ -947,6 +1046,9 @@ c-19 -12 -52 -24 -73 -27 -36 -6 -43 -3 -74 29 -23 23 -44 36 -61 36 -14 0
 6 -29 0 -59 23 -59 45 0 13 -57 45 -82 45 -7 0 -21 -13 -31 -29z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Mysore")}
           id="Mysore"
           className={pstyle}
@@ -977,6 +1079,9 @@ c-19 -12 -52 -24 -73 -27 -36 -6 -43 -3 -74 29 -23 23 -44 36 -61 36 -14 0
 7 -45 19 -61 26 -15 8 -34 12 -42 9 -8 -4 -26 1 -40 10 -29 19 -34 20 -40 4z"
         />
         <path
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content={hoverState}
+          data-tooltip-place="top"
           onClick={() => setSelectedState("Chamarajanagar")}
           id="Chamarajanagar"
           className={pstyle}
@@ -1007,7 +1112,7 @@ c-19 -12 -52 -24 -73 -27 -36 -6 -43 -3 -74 29 -23 23 -44 36 -61 36 -14 0
         />
       </g>
     </svg>
-  );
+  </div>);
 };
 
 export default KrMap;
