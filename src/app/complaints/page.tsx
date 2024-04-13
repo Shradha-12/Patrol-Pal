@@ -337,7 +337,7 @@ export default function EnhancedTable() {
                     >
                         <EnhancedTableHead
                             numSelected={selected.length}
-                            order={order}
+                            order={order }
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
