@@ -8,7 +8,33 @@
 - **Member 2:** Affan Hussain (hussainaffan911@gmail.com)
 
 ---
+To run the React app, follow these instructions:
 
+1. Make sure you have Node.js installed on your machine. You can download it from [here](https://nodejs.org/).
+
+2. Clone the GitHub repository of the project:
+   ```
+   git clone https://github.com/m0hit-kumar/patrol-pal.git
+   ```
+
+3. Navigate to the project directory:
+   ```
+   cd patrol-pal
+   ```
+
+4. Install the dependencies using npm:
+   ```
+   npm install
+   ```
+
+5. Once the installation is complete, you can start the development server by running:
+   ```
+   npm run dev
+   ```
+
+6. The React app should now be running locally. You can access it in your web browser at `http://localhost:3000/`.
+
+That's it! You've successfully set up and started the React app using npm. You can now explore the application and its features in your browser.
 ## Idea Brief
 
 ### Features for Real-Time Police Response Dashboard:
