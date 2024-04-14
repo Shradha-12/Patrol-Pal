@@ -101,9 +101,19 @@ The impact of the solution is profound, contributing to faster response times, i
 
 ## Snapshots of Final Product
 - **Dashboard**
+- ![localhost_3000_dashboard - Google Chrome 14-04-2024 21_29_19](https://github.com/m0hit-kumar/patrol-pal/assets/97183229/e3b03f79-6180-473b-b113-69ea36c57ba8)
 - **Interactive Karnataka Map**
+![localhost_3000_dashboard - Google Chrome 14-04-2024 21_29_34](https://github.com/m0hit-kumar/patrol-pal/assets/97183229/20d5ee72-eda7-42f4-aff7-004cb182dfd4)
+
 - **Digitalize Records and Chatbot**
+- ![localhost_3000_dashboard - Google Chrome 14-04-2024 21_33_48](https://github.com/m0hit-kumar/patrol-pal/assets/97183229/e1b88579-2f92-4e98-b761-a8ffb24be22a)
+
 - **Online FIR, Complaint List, and Marketplace**
+![localhost_3000_dashboard - Google Chrome 14-04-2024 21_34_06](https://github.com/m0hit-kumar/patrol-pal/assets/97183229/c070719c-9af8-429e-b34e-ba67d6e023f6)
+
+![localhost_3000_dashboard - Google Chrome 14-04-2024 21_34_27](https://github.com/m0hit-kumar/patrol-pal/assets/97183229/70b17392-af86-43bf-97fc-c3a0ee9920e6)
+![localhost_3000_dashboard - Google Chrome 14-04-2024 21_35_34](https://github.com/m0hit-kumar/patrol-pal/assets/97183229/b6eff75e-b512-4eec-89f1-4f7694cb5f46)
+![localhost_3000_dashboard - Google Chrome 14-04-2024 21_35_22](https://github.com/m0hit-kumar/patrol-pal/assets/97183229/d845250d-c0d7-4952-abfe-0eacc607f55b)
 
 ---
 
