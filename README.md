@@ -46,6 +46,8 @@
 - **Map-based filter and update on real-time basis**
 - **Area-wise camera availability**
 - **Live location on police**
+- 
+![KSP Hackathon - Presentation - Google Chrome 14-04-2024 19_25_24](https://github.com/m0hit-kumar/patrol-pal/assets/97183229/a87019d2-d70e-40f5-a9f0-a000df91d23a)
 
 ---
 
