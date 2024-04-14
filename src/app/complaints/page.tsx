@@ -21,48 +21,56 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-
+import PlaceIcon from '@mui/icons-material/Place';
 interface Data {
-    id: any;
-    calories: number;
-    carbs: number;
-    fat: number;
-    name: string;
-    protein: number;
+    FirNumber: any;
+    Latitude: number;
+    Longitude: number;
+    Status: string;
+    Address: string;
+    Description: string;
+    ReporterName: string;
+    ReporterPhone: string;
+    ReporterAddress: string;
+    Reason: string;
 }
 
 function createData(
-    id: any,
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
+    FirNumber: number,
+    Latitude: number,
+    Longitude: number,
+    Status: string,
+    Address: string,
+    Description: string,
+    ReporterName: string,
+    ReporterPhone: string,
+    ReporterAddress: string,
+    Reason: string
 ): Data {
     return {
-        id,
-        name,
-        calories,
-        fat,
-        carbs,
-        protein,
+        FirNumber,
+        Latitude,
+        Longitude,
+        Status,
+        Address,
+        Description,
+        ReporterName,
+        ReporterPhone,
+        ReporterAddress,
+        Reason
     };
 }
 
 const rows = [
-    createData(1, 'Cupcake', 305, 3.7, 67, 4.3),
-    createData(2, 'Donut', 452, 25.0, 51, 4.9),
-    createData(3, 'Eclair', 262, 16.0, 24, 6.0),
-    createData(4, 'Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData(5, 'Gingerbread', 356, 16.0, 49, 3.9),
-    createData(6, 'Honeycomb', 408, 3.2, 87, 6.5),
-    createData(7, 'Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData(8, 'Jelly Bean', 375, 0.0, 94, 0.0),
-    createData(9, 'KitKat', 518, 26.0, 65, 7.0),
-    createData(10, 'Lollipop', 392, 0.2, 98, 0.0),
-    createData(11, 'Marshmallow', 318, 0, 81, 2.0),
-    createData(12, 'Nougat', 360, 19.0, 9, 37.0),
-    createData(13, 'Oreo', 437, 18.0, 63, 4.0),
+    createData(1, 17.2, 12.2, "Pending", "Address 1", "Murder", "Reporter 1", "9876543210", "Reporter Address", "Murder happend"),
+    createData(2, 17.2, 12.2, "Pending", "Address 1", "Murder", "Reporter 1", "9876543210", "Reporter Address", "Murder happened"),
+    createData(3, 23.4, 45.6, "Resolved", "Address 2", "Robbery", "Reporter 2", "1234567890", "Reporter Address", "Robbery occurred"),
+    createData(4, -15.3, 34.8, "Pending", "Address 3", "Assault", "Reporter 3", "7890123456", "Reporter Address", "Assault reported"),
+    createData(5, 0.0, 0.0, "Closed", "Address 4", "Burglary", "Reporter 4", "4567890123", "Reporter Address", "Burglary confirmed"),
+    createData(6, 35.9, -72.1, "Pending", "Address 5", "Vandalism", "Reporter 5", "3456789012", "Reporter Address", "Vandalism reported"),
+
+    createData(7, 17.2, 12.2, "Pending", "Address 1", "Murder", "Reporter 1", "9876543210", "Reporter Address", "Murder happened"),
+
 ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -89,7 +97,7 @@ function getComparator<Key extends keyof any>(
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
- 
+
 function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
     const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
     stabilizedThis.sort((a, b) => {
@@ -110,36 +118,68 @@ interface HeadCell {
 }
 
 const headCells: readonly HeadCell[] = [
+
     {
-        id: 'name',
-        numeric: false,
+        id: 'FirNumber',
+        numeric: true,
         disablePadding: true,
-        label: 'Dessert (100g serving)',
+        label: 'FIR Number',
     },
     {
-        id: 'calories',
-        numeric: true,
+        id: 'Latitude',
+        numeric: false,
         disablePadding: false,
-        label: 'Calories',
+        label: 'Location',
+    },
+    // {
+    //     id: 'Longitude',
+    //     numeric: false,
+    //     disablePadding: false,
+    //     label: 'Longitude',
+    // },
+    {
+        id: 'Status',
+        numeric: false,
+        disablePadding: false,
+        label: 'Status',
     },
     {
-        id: 'fat',
-        numeric: true,
+        id: 'Address',
+        numeric: false,
         disablePadding: false,
-        label: 'Fat (g)',
+        label: 'Address',
     },
     {
-        id: 'carbs',
-        numeric: true,
+        id: 'Description',
+        numeric: false,
         disablePadding: false,
-        label: 'Carbs (g)',
+        label: 'Description',
     },
     {
-        id: 'protein',
-        numeric: true,
+        id: 'ReporterName',
+        numeric: false,
         disablePadding: false,
-        label: 'Protein (g)',
+        label: 'Reporter Name',
     },
+    {
+        id: 'ReporterPhone',
+        numeric: false,
+        disablePadding: false,
+        label: 'Reporter Phone',
+    },
+    {
+        id: 'ReporterAddress',
+        numeric: false,
+        disablePadding: false,
+        label: 'Reporter Address',
+    },
+    {
+        id: 'Reason',
+        numeric: false,
+        disablePadding: false,
+        label: 'Reason',
+    },
+
 ];
 
 interface EnhancedTableProps {
@@ -233,7 +273,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                     id="tableTitle"
                     component="div"
                 >
-                    Nutrition
+                    Complaints
                 </Typography>
             )}
             {numSelected > 0 ? (
@@ -254,7 +294,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 }
 export default function EnhancedTable() {
     const [order, setOrder] = useState<Order>('asc');
-    const [orderBy, setOrderBy] = useState<keyof Data>('calories');
+    const [orderBy, setOrderBy] = useState<keyof Data>('FirNumber');
     const [selected, setSelected] = useState<readonly number[]>([]);
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(false);
@@ -271,7 +311,7 @@ export default function EnhancedTable() {
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = rows.map((n) => n.id);
+            const newSelected = rows.map((n) => n.FirNumber);
             setSelected(newSelected);
             return;
         }
@@ -337,7 +377,7 @@ export default function EnhancedTable() {
                     >
                         <EnhancedTableHead
                             numSelected={selected.length}
-                            order={order }
+                            order={order}
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
@@ -345,17 +385,17 @@ export default function EnhancedTable() {
                         />
                         <TableBody>
                             {visibleRows.map((row, index) => {
-                                const isItemSelected = isSelected(row.id);
+                                const isItemSelected = isSelected(row.FirNumber);
                                 const labelId = `enhanced-table-checkbox-${index}`;
 
                                 return (
                                     <TableRow
                                         hover
-                                        onClick={(event) => handleClick(event, row.id)}
+                                        onClick={(event) => handleClick(event, row.FirNumber)}
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={row.id}
+                                        key={row.FirNumber}
                                         selected={isItemSelected}
                                         sx={{ cursor: 'pointer' }}
                                     >
@@ -372,14 +412,21 @@ export default function EnhancedTable() {
                                             component="th"
                                             id={labelId}
                                             scope="row"
-                                            padding="none"
+                                            padding="normal"
+                                            align='center'
                                         >
-                                            {row.name}
+                                            {row.FirNumber}
                                         </TableCell>
-                                        <TableCell align="right">{row.calories}</TableCell>
-                                        <TableCell align="right">{row.fat}</TableCell>
-                                        <TableCell align="right">{row.carbs}</TableCell>
-                                        <TableCell align="right">{row.protein}</TableCell>
+                                        <TableCell align="left"><PlaceIcon /></TableCell>
+                                        <TableCell align="left">{row.Status}</TableCell>
+                                        <TableCell align="left">{row.Address}</TableCell>
+                                        <TableCell align="left">{row.Description}</TableCell>
+                                        <TableCell align="left">{row.ReporterName}</TableCell>
+                                        <TableCell align="left">{row.ReporterPhone}</TableCell>
+                                        <TableCell align="left">{row.ReporterAddress}</TableCell>
+
+                                        <TableCell align="left">{row.Reason}</TableCell>
+
                                     </TableRow>
                                 );
                             })}
@@ -409,6 +456,6 @@ export default function EnhancedTable() {
                 control={<Switch checked={dense} onChange={handleChangeDense} />}
                 label="Dense padding"
             />
-        </Box>
+        </Box >
     );
 }

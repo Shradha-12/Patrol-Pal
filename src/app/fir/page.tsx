@@ -22,7 +22,7 @@ const FIRForm = () => {
 
                         <AppBar position="static" style={{ backgroundColor: '#17193b' }}>
                             <Toolbar>
-                                <Image className='ml-2' alt="" src={image} height={58} width={200} />
+                                <Image className='ml-2' alt="" src={"https://ksp.karnataka.gov.in/frontend/opt1/images/ksp_icons/ptckal.jpg"} height={58} width={200} />
                                 <Typography variant="body1" className="p-2" sx={{ mr: 2, color: 'white' }} style={{ margin: 'auto' }}>
                                     आपातकालीन नंबर : 112 &nbsp; गरिमा हेल्पलाइन : 1090 &nbsp; चाइल्ड हेल्पलाइन : 1098 &nbsp; एम्बुलेंस नंबर : 108 &nbsp; साइबर क्राइम हेल्पलाइन : 1930 &nbsp; राज्य केन्द्रीकृत कॉल सेंटर नं. : 181 &nbsp; &nbsp;
                                 </Typography>
