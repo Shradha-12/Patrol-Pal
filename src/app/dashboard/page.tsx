@@ -1,19 +1,17 @@
 "use client"
 import React, { useState } from 'react';
+
 import { PieChart, LineChart, BarChart } from '@mui/x-charts';
 import { Tooltip } from 'react-tooltip'
 import KrMap from "../../assets/KrMap";
+import MapStats from "../../assets/data/mapstats";
 import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from 'next/navigation';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import MapStatisticsWidget from '../../components/MapStatisticsWidget';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import Link from 'next/link';
 const Dashboard = () => {
-    const router = useRouter()
-    const [selectedState, setSelectedState] = useState<string>("Bidar");
-    const district = { district: selectedState };
+     const [selectedState, setSelectedState] = useState<string>("Bidar");
 
 
 
@@ -26,13 +24,18 @@ const Dashboard = () => {
                 <Tooltip
                     id="my-tooltip" />
                 <div className='flex flex-col items-center'>
-                    <MapStatisticsWidget coordinates={[17.913682823451815, 77.50965388590237]} District={selectedState} />
-                    <h1 className="self-start text-white"
-                        onClick={() => router.push('/details/[data]',
-                            // { data: JSON.stringify(district) }
-                        )}>
-                        Learn More <OpenInNewIcon />
-                    </h1>
+                    <MapStatisticsWidget coordinates={[17.913682823451815, 77.50965388590237]} District={selectedState} Mapstats={{
+                        CrimeRate: MapStats[selectedState]["Crime Rate"],
+                        PoliceStations: MapStats["Bidar"]["Police Stations"],
+                        PendingCases: MapStats["Bidar"]["Pending Cases"]
+                    }} />
+                    <Link className="my-4 self-end text-[#ffffff] hover:text-[#59fff1]"
+                        href=
+                        {{
+                            pathname: "/details",
+                            query: { district: selectedState }
+                        }} >Learn More <OpenInNewIcon /></Link>
+
                     <div className="w-full bg-[#040620] rounded-md mt-2  flex items-center">
                         <input type="text" className="m-2 w-full bg-[#040620] text-white placeholder-white focus:outline-none" placeholder="Search..." />
                         <div className="bg-[#474D84] rounded rounded-bl-none rounded-tl-none    w-[40px] h-full flex justify-center items-center">
@@ -70,15 +73,16 @@ const Dashboard = () => {
 
                 </div>
             </div>
-            <div className='flex justify-between h-100'>
+            <div className='flex   '>
                 <div className='         rounded-md border-dashed    p-2
                          bg-[#0000003d]
                          '>
+
                     <LineChart
                         width={400}
                         height={300}
                         series={[
-                            { data: [10, 4, 4, 2], label: 'Cases Registerd', color: '#4e79a7' }
+                            { data: [8, 4, 4, 2], label: 'Cases Registerd', color: '#057efe' }
                         ]}
                         xAxis={[{
                             scaleType: 'point', data: [
@@ -98,12 +102,15 @@ const Dashboard = () => {
 
                             },
                         }}
+
+
                     />
                 </div>
-                <div className=' rounded-md border-dashed    py-2
+                <div className=' rounded-md border-dashed   ml-8 py-2
                          bg-[#0000003d]
-                         '> <BarChart
+                         '> <BarChart title='Crime Rate per District'
                         xAxis={[{
+                            label: "District",
                             scaleType: 'band',
                             data: [
                                 "Bagalkote",
@@ -137,7 +144,12 @@ const Dashboard = () => {
                                 "Vijayanagara",
                                 "Vijayapura",
                                 "Yadgir"
-                            ]
+                            ],
+                            slotProps: {
+                                axisTickLabel: {
+                                    rotate: '90deg'
+                                }
+                            }
                         }]}
                         series=
                         {
@@ -175,16 +187,24 @@ const Dashboard = () => {
                                     ], color: "#577399"
                                 }
                             ]}
-                        width={500}
+                        width={700}
                         height={300}
+                    // sx={{
+                    //     "& .MuiChartsAxis-directionX": {
+                    //         "& .MuiChartsAxis-tickLabel": {
+                    //             rotate: "90deg"
+                    //         }
+                    //     }
+                    // }}
+
                     /></div>
-                <div className='  h-[100px]   w-[200px]   rounded-md border-dashed    py-2
+                {/* <div className='  h-[100px]   w-[200px]   rounded-md border-dashed    py-2
                          bg-[#0000003d]
-                '>
-                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                '> */}
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateCalendar />
                     </LocalizationProvider> */}
-                </div>
+                {/* </div> */}
             </div>
 
         </div>
