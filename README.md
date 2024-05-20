@@ -117,7 +117,7 @@ The impact of the solution is profound, contributing to faster response times, i
 ---
 
 ## GitHub Repository
-[GitHub Repository Link](https://github.com/m0hit-kumar/patrol-pal)
+[GitHub Repository Link](https://github.com/Shradha-12/Patrol-Pal)
 
 ---
 
