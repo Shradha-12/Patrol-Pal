@@ -1,11 +1,5 @@
 # Police Performance and Resource Management
 
-## Team: Code Forger
-
-### Team Details
-- **Team Leader:** Shradha Jain (shradhajain479@gmail.com)
-- **Member 1:** Mohit Kumar (mohitkumar11725@gmail.com)
-- **Member 2:** Affan Hussain (hussainaffan911@gmail.com)
 
 ---
 To run the React app, follow these instructions:
